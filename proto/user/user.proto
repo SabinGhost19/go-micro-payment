@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/SabinGhost19/go-micro-payment/proto/userpb";
+
+// User service for account management
+service UserService {
+  // Registers a new user
+  rpc RegisterUser (RegisterUserRequest) returns (UserResponse) {}
+  // Authenticates a user
+  rpc AuthenticateUser (AuthenticateUserRequest) returns (AuthResponse) {}
+  // Retrieves profile information
+  rpc GetUser (GetUserRequest) returns (UserResponse) {}
+}
+
+// User registration payload
+message RegisterUserRequest {
+  string email = 1;
+  string password = 2;
+  string name = 3;
+}
+
+// Authentication payload
+message AuthenticateUserRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// Payload for profile request
+message GetUserRequest {
+  string user_id = 1;
+}
+
+// User information
+message UserResponse {
+  string user_id = 1;
+  string email = 2;
+  string name = 3;
+  string created_at = 4;
+}
+
+// Authentication response with JWT or session token
+message AuthResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string user_id = 3;
+}

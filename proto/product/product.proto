@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package product;
+
+
+option go_package = "github.com/SabinGhost19/go-micro-payment/proto/productb";
+
+// Product service manages the product catalog
+service ProductService {
+  rpc CreateProduct (CreateProductRequest) returns (ProductResponse) {}
+  rpc GetProduct (GetProductRequest) returns (ProductResponse) {}
+  rpc ListProducts (ListProductsRequest) returns (ListProductsResponse) {}
+  rpc UpdateProduct (UpdateProductRequest) returns (ProductResponse) {}
+  rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse) {}
+}
+
+// Message for creating a new product
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+  int32 stock = 4;
+}
+
+// Retrieve a product by ID
+message GetProductRequest {
+  string product_id = 1;
+}
+
+// Listing products with optional pagination
+message ListProductsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+}
+
+// Update product information
+message UpdateProductRequest {
+  string product_id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  int32 stock = 5;
+}
+
+// Response for deleting a product
+message DeleteProductRequest {
+  string product_id = 1;
+}
+
+// Product information response
+message ProductResponse {
+  string product_id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  int32 stock = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+// For bulk listing
+message ListProductsResponse {
+  repeated ProductResponse products = 1;
+}
+
+// Acknowledge deletion
+message DeleteProductResponse {
+  bool success = 1;
+}
