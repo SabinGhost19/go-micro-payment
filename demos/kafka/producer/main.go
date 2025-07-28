@@ -15,7 +15,7 @@ type Order struct {
 
 func main() {
 	http.HandleFunc("/", placeOrder)
-	addr := ":8080"
+	addr := ":3005"
 	log.Fatal(http.ListenAndServe(addr, nil))
 }
 

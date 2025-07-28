@@ -32,18 +32,20 @@ func main() {
 	doneChan := make(chan struct{})
 
 	go func() {
-		select {
-		case err := <-consumer.Errors():
-			fmt.Printf("Error: %v\n", err)
-		case message := <-consumer.Messages():
-			msgCount++
-			log.Printf("Received message: %s, number: %d on topic: %s", string(message.Value), msgCount, topic)
-			order := string(message.Value)
-			log.Printf("Order received: %s...processing....", order)
+		for {
+			select {
+			case err := <-consumer.Errors():
+				fmt.Printf("Error: %v\n", err)
+			case message := <-consumer.Messages():
+				msgCount++
+				log.Printf("Received message: %s, number: %d on topic: %s", string(message.Value), msgCount, topic)
+				order := string(message.Value)
+				log.Printf("Order received: %s...processing....", order)
 
-		case <-signalChan:
-			log.Println("Shutting down consumer...interrupt is detected")
-			doneChan <- struct{}{}
+			case <-signalChan:
+				log.Println("Shutting down consumer...interrupt is detected")
+				doneChan <- struct{}{}
+			}
 		}
 	}()
 
