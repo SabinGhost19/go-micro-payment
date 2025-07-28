@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"fmt"
 
 	inventorypb "github.com/SabinGhost19/go-micro-payment/proto/inventory"
 	"github.com/SabinGhost19/go-micro-payment/services/inventory/service"
@@ -17,7 +18,14 @@ func NewInventoryHandler(inventoryService *service.InventoryService) *InventoryH
 }
 
 func (c *InventoryHandler) CheckStock(ctx context.Context, in *inventorypb.CheckStockRequest) (*inventorypb.CheckStockResponse, error) {
-	return c.inventoryService.CheckStock(ctx, in)
+	response, err, str := c.inventoryService.CheckStock(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	if str != "" {
+		fmt.Println("Status: " + str)
+	}
+	return response, nil
 }
 
 func (*InventoryHandler) ReserveStock(context.Context, *inventorypb.ReserveStockRequest) (*inventorypb.ReserveStockResponse, error) {
