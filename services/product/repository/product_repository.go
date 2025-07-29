@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/google/uuid"
@@ -22,8 +23,9 @@ type ProductRepository interface {
 	Create(ctx context.Context, p *Product) error
 	GetByID(ctx context.Context, id string) (*Product, error)
 	List(ctx context.Context, limit, offset int) ([]*Product, error)
-	Update(ctx context.Context, p *Product) error
+	Update(ctx context.Context, p *Product) (*Product, error)
 	Delete(ctx context.Context, id string) error
+	ReturnProductById(ctx context.Context, id string) (*Product, error)
 }
 
 type productRepo struct {
@@ -41,12 +43,18 @@ func (r *productRepo) Create(ctx context.Context, p *Product) error {
 	return r.db.WithContext(ctx).Create(p).Error
 }
 
-func (r *productRepo) GetByID(ctx context.Context, id string) (*Product, error) {
-	var p Product
-	if err := r.db.WithContext(ctx).First(&p, "id = ?", id).Error; err != nil {
-		return nil, err
+// helper
+func (r *productRepo) ReturnProductById(ctx context.Context, id string) (*Product, error) {
+	product := &Product{}
+	r.db.WithContext(ctx).Where("id = ?", id).First(&product)
+	if product.ID == "" {
+		return nil, errors.New("product not found")
 	}
-	return &p, nil
+	return product, nil
+}
+func (r *productRepo) GetByID(ctx context.Context, id string) (*Product, error) {
+	prod, err := r.ReturnProductById(ctx, id)
+	return prod, err
 }
 
 func (r *productRepo) List(ctx context.Context, limit, offset int) ([]*Product, error) {
@@ -57,9 +65,10 @@ func (r *productRepo) List(ctx context.Context, limit, offset int) ([]*Product, 
 	return products, nil
 }
 
-func (r *productRepo) Update(ctx context.Context, p *Product) error {
+func (r *productRepo) Update(ctx context.Context, p *Product) (*Product, error) {
 	p.UpdatedAt = time.Now()
-	return r.db.WithContext(ctx).Save(p).Error
+	err := r.db.WithContext(ctx).Save(p).Error
+	return p, err
 }
 
 func (r *productRepo) Delete(ctx context.Context, id string) error {

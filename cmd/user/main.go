@@ -23,7 +23,11 @@ func main() {
 		log.Fatal("failed to connect DB:", err)
 	}
 
-	db.AutoMigrate(&repository.User{})
+	err = db.AutoMigrate(&repository.User{})
+	if err != nil {
+		return
+	}
+
 	repo := repository.NewUserRepository(db)
 	jwtSecret := os.Getenv("JWT_SECRET")
 

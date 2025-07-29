@@ -33,7 +33,14 @@ func sendToKafka(topic string, message []byte) error {
 	if err != nil {
 		return err
 	}
-	defer producer.Close()
+
+	defer func(producer sarama.SyncProducer) error {
+		err := producer.Close()
+		if err != nil {
+			return err
+		}
+		return nil
+	}(producer)
 
 	msg := &sarama.ProducerMessage{
 		Topic: topic,

@@ -35,3 +35,21 @@ func (h *ProductHandler) GetProduct(ctx context.Context, req *productpb.GetProdu
 	}
 	return h.productService.GetProduct(ctx, req)
 }
+
+func (h *ProductHandler) ListProducts(ctx context.Context, req *productpb.ListProductsRequest) (*productpb.ListProductsResponse, error) {
+}
+
+func (h *ProductHandler) UpdateProduct(ctx context.Context, req *productpb.UpdateProductRequest) (*productpb.ProductResponse, error) {
+	if req.ProductId == "" || req.Price <= 0 {
+		return nil, status.Errorf(codes.InvalidArgument, "ProductId and Price are required")
+	}
+
+	return h.productService.UpdateProduct(ctx, req)
+}
+
+func (h *ProductHandler) DeleteProduct(ctx context.Context, req *productpb.DeleteProductRequest) (*productpb.DeleteProductResponse, error) {
+	if req.ProductId == "" {
+		return &productpb.DeleteProductResponse{Success: false}, status.Errorf(codes.InvalidArgument, "ProductId is required")
+	}
+	return h.productService.DeleteProduct(ctx, req)
+}
