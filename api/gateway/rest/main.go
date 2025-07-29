@@ -1,15 +1,14 @@
 package main
 
 import (
-	"api/gateway/rest/grpcclient"
-	"api/gateway/rest/handler"
-	"api/gateway/rest/router"
+	grpcclient "github.com/SabinGhost19/go-micro-payment/api/gateway/rest/grpcClient"
+	"github.com/SabinGhost19/go-micro-payment/api/gateway/rest/routes"
 	"log"
 	"os"
 )
 
 func main() {
-	// Inițializezi clienții gRPC pentru fiecare microserviciu (setați porturile după serviciile voastre)
+	//init go clients
 	grpcclient.InitGRPCClients(map[string]string{
 		"user":         "localhost:50051",
 		"product":      "localhost:50052",
@@ -19,8 +18,8 @@ func main() {
 		"notification": "localhost:50056",
 	})
 
-	// Obții routerul Gin complet routat
-	r := router.NewRouter()
+	//get gin router
+	r := routes.NewRouter()
 	port := os.Getenv("GATEWAY_PORT")
 	if port == "" {
 		port = "8080"
