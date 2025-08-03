@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// router config
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 

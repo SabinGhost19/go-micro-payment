@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v3.21.12
-// source: order.proto
+// source: model.proto
 
 package orderpb
 
@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Create order request
+// Create model request
 type CreateOrderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
@@ -82,7 +82,7 @@ func (x *CreateOrderRequest) GetAddress() string {
 	return ""
 }
 
-// Get order details
+// Get model details
 type GetOrderRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
@@ -188,7 +188,7 @@ func (x *ListOrdersRequest) GetPageSize() int32 {
 	return 0
 }
 
-// A single item in order
+// A single item in model
 type OrderItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ProductId     string                 `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
@@ -375,10 +375,10 @@ var File_order_proto protoreflect.FileDescriptor
 
 const file_order_proto_rawDesc = "" +
 	"\n" +
-	"\vorder.proto\x12\x05order\"o\n" +
+	"\vmodel.proto\x12\x05order\"o\n" +
 	"\x12CreateOrderRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12&\n" +
-	"\x05items\x18\x02 \x03(\v2\x10.order.OrderItemR\x05items\x12\x18\n" +
+	"\x05items\x18\x02 \x03(\v2\x10.model.OrderItemR\x05items\x12\x18\n" +
 	"\aaddress\x18\x03 \x01(\tR\aaddress\",\n" +
 	"\x0fGetOrderRequest\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\tR\aorderId\"]\n" +
@@ -393,18 +393,18 @@ const file_order_proto_rawDesc = "" +
 	"\rOrderResponse\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\tR\aorderId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12&\n" +
-	"\x05items\x18\x03 \x03(\v2\x10.order.OrderItemR\x05items\x12\x16\n" +
+	"\x05items\x18\x03 \x03(\v2\x10.model.OrderItemR\x05items\x12\x16\n" +
 	"\x06status\x18\x04 \x01(\tR\x06status\x12!\n" +
 	"\ftotal_amount\x18\x05 \x01(\x01R\vtotalAmount\x12\x1d\n" +
 	"\n" +
 	"created_at\x18\x06 \x01(\tR\tcreatedAt\"B\n" +
 	"\x12ListOrdersResponse\x12,\n" +
-	"\x06orders\x18\x01 \x03(\v2\x14.order.OrderResponseR\x06orders2\xd1\x01\n" +
+	"\x06orders\x18\x01 \x03(\v2\x14.model.OrderResponseR\x06orders2\xd1\x01\n" +
 	"\fOrderService\x12@\n" +
-	"\vCreateOrder\x12\x19.order.CreateOrderRequest\x1a\x14.order.OrderResponse\"\x00\x12:\n" +
-	"\bGetOrder\x12\x16.order.GetOrderRequest\x1a\x14.order.OrderResponse\"\x00\x12C\n" +
+	"\vCreateOrder\x12\x19.model.CreateOrderRequest\x1a\x14.model.OrderResponse\"\x00\x12:\n" +
+	"\bGetOrder\x12\x16.model.GetOrderRequest\x1a\x14.model.OrderResponse\"\x00\x12C\n" +
 	"\n" +
-	"ListOrders\x12\x18.order.ListOrdersRequest\x1a\x19.order.ListOrdersResponse\"\x00B8Z6github.com/SabinGhost19/go-micro-payment/proto/orderpbb\x06proto3"
+	"ListOrders\x12\x18.model.ListOrdersRequest\x1a\x19.model.ListOrdersResponse\"\x00B8Z6github.com/SabinGhost19/go-micro-payment/proto/orderpbb\x06proto3"
 
 var (
 	file_order_proto_rawDescOnce sync.Once
@@ -420,23 +420,23 @@ func file_order_proto_rawDescGZIP() []byte {
 
 var file_order_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_order_proto_goTypes = []any{
-	(*CreateOrderRequest)(nil), // 0: order.CreateOrderRequest
-	(*GetOrderRequest)(nil),    // 1: order.GetOrderRequest
-	(*ListOrdersRequest)(nil),  // 2: order.ListOrdersRequest
-	(*OrderItem)(nil),          // 3: order.OrderItem
-	(*OrderResponse)(nil),      // 4: order.OrderResponse
-	(*ListOrdersResponse)(nil), // 5: order.ListOrdersResponse
+	(*CreateOrderRequest)(nil), // 0: model.CreateOrderRequest
+	(*GetOrderRequest)(nil),    // 1: model.GetOrderRequest
+	(*ListOrdersRequest)(nil),  // 2: model.ListOrdersRequest
+	(*OrderItem)(nil),          // 3: model.OrderItem
+	(*OrderResponse)(nil),      // 4: model.OrderResponse
+	(*ListOrdersResponse)(nil), // 5: model.ListOrdersResponse
 }
 var file_order_proto_depIdxs = []int32{
-	3, // 0: order.CreateOrderRequest.items:type_name -> order.OrderItem
-	3, // 1: order.OrderResponse.items:type_name -> order.OrderItem
-	4, // 2: order.ListOrdersResponse.orders:type_name -> order.OrderResponse
-	0, // 3: order.OrderService.CreateOrder:input_type -> order.CreateOrderRequest
-	1, // 4: order.OrderService.GetOrder:input_type -> order.GetOrderRequest
-	2, // 5: order.OrderService.ListOrders:input_type -> order.ListOrdersRequest
-	4, // 6: order.OrderService.CreateOrder:output_type -> order.OrderResponse
-	4, // 7: order.OrderService.GetOrder:output_type -> order.OrderResponse
-	5, // 8: order.OrderService.ListOrders:output_type -> order.ListOrdersResponse
+	3, // 0: model.CreateOrderRequest.items:type_name -> model.OrderItem
+	3, // 1: model.OrderResponse.items:type_name -> model.OrderItem
+	4, // 2: model.ListOrdersResponse.orders:type_name -> model.OrderResponse
+	0, // 3: model.OrderService.CreateOrder:input_type -> model.CreateOrderRequest
+	1, // 4: model.OrderService.GetOrder:input_type -> model.GetOrderRequest
+	2, // 5: model.OrderService.ListOrders:input_type -> model.ListOrdersRequest
+	4, // 6: model.OrderService.CreateOrder:output_type -> model.OrderResponse
+	4, // 7: model.OrderService.GetOrder:output_type -> model.OrderResponse
+	5, // 8: model.OrderService.ListOrders:output_type -> model.ListOrdersResponse
 	6, // [6:9] is the sub-list for method output_type
 	3, // [3:6] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name

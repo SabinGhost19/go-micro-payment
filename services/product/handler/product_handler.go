@@ -10,8 +10,6 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// Implementăm interfața gRPC ProductServiceServer aici,
-// dar doar rotește cererile către service-ul de business.
 type ProductHandler struct {
 	productService *service.ProductService
 	productpb.UnimplementedProductServiceServer

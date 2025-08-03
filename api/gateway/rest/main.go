@@ -12,7 +12,7 @@ func main() {
 	grpcclient.InitGRPCClients(map[string]string{
 		"user":         "localhost:50051",
 		"product":      "localhost:50052",
-		"order":        "localhost:50053",
+		"model":        "localhost:50053",
 		"payment":      "localhost:50054",
 		"inventory":    "localhost:50055",
 		"notification": "localhost:50056",

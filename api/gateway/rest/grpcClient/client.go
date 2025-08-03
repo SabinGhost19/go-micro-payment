@@ -51,7 +51,7 @@ func InitGRPCClients(addrs map[string]string) error {
 	}()
 	go func() {
 		defer wg.Done()
-		connect(addrs["order"], func(conn *grpc.ClientConn) { OrderClient = orderpb.NewOrderServiceClient(conn) })
+		connect(addrs["model"], func(conn *grpc.ClientConn) { OrderClient = orderpb.NewOrderServiceClient(conn) })
 	}()
 	go func() {
 		defer wg.Done()

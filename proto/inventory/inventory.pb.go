@@ -67,7 +67,7 @@ func (x *CheckStockRequest) GetProductId() string {
 	return ""
 }
 
-// Reserve stock for an order
+// Reserve stock for an model
 type ReserveStockRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	OrderId       string                 `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
@@ -173,7 +173,7 @@ func (x *UpdateStockRequest) GetStockDelta() int32 {
 	return 0
 }
 
-// Used for order reservation
+// Used for model reservation
 type StockItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ProductId     string                 `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
