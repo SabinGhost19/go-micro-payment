@@ -4,10 +4,10 @@
   on:
     push:
       branches:
-        - ghosty_test
+        - master
     pull_request:
       branches:
-        - ghosty_test
+        - master
 
   jobs:
     unit-tests:
