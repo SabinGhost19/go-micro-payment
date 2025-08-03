@@ -2,6 +2,12 @@
 
 A microservices-based e-commerce payment system built with Go, gRPC, Kafka, and PostgreSQL. The system manages user accounts, product catalogs, inventory, orders, payments, and notifications, with an API Gateway as the client entry point.
 
+
+#
+<p align="center">
+    <img src="./docs/assets/wall.webp" alt="perete" width="450">
+</p>
+
 ## Architecture Overview
 
 The system consists of six microservices: **User**, **Product**, **Inventory**, **Order**, **Payment**, **Notification**, and **API Gateway**. Here's how they interact and their roles:

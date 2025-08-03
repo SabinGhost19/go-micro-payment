@@ -46,6 +46,11 @@ func (s *UserService) AuthenticateUser(ctx context.Context, req *userpb.Authenti
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
 		return nil, errors.New("invalid credentials")
 	}
+
+	if s.jwtSecret == "" {
+		return nil, errors.New("invalid JWT secret")
+	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": user.ID,
 		"exp":     time.Now().Add(time.Hour * 72).Unix(),
