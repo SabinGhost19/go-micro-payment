@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v3.21.12
-// source: model.proto
+// source: proto/order/order.proto
 
 package orderpb
 
@@ -19,16 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OrderService_CreateOrder_FullMethodName = "/model.OrderService/CreateOrder"
-	OrderService_GetOrder_FullMethodName    = "/model.OrderService/GetOrder"
-	OrderService_ListOrders_FullMethodName  = "/model.OrderService/ListOrders"
+	OrderService_CreateOrder_FullMethodName = "/order.OrderService/CreateOrder"
+	OrderService_GetOrder_FullMethodName    = "/order.OrderService/GetOrder"
+	OrderService_ListOrders_FullMethodName  = "/order.OrderService/ListOrders"
 )
 
 // OrderServiceClient is the client API for OrderService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// Order service for placing and querying orders
+// OrderService manages order operations
 type OrderServiceClient interface {
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*OrderResponse, error)
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*OrderResponse, error)
@@ -77,7 +77,7 @@ func (c *orderServiceClient) ListOrders(ctx context.Context, in *ListOrdersReque
 // All implementations must embed UnimplementedOrderServiceServer
 // for forward compatibility.
 //
-// Order service for placing and querying orders
+// OrderService manages order operations
 type OrderServiceServer interface {
 	CreateOrder(context.Context, *CreateOrderRequest) (*OrderResponse, error)
 	GetOrder(context.Context, *GetOrderRequest) (*OrderResponse, error)
@@ -180,7 +180,7 @@ func _OrderService_ListOrders_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var OrderService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "model.OrderService",
+	ServiceName: "order.OrderService",
 	HandlerType: (*OrderServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -197,5 +197,5 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "model.proto",
+	Metadata: "proto/order/order.proto",
 }

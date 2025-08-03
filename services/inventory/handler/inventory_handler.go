@@ -2,34 +2,27 @@ package handler
 
 import (
 	"context"
-	"fmt"
-
 	inventorypb "github.com/SabinGhost19/go-micro-payment/proto/inventory"
 	"github.com/SabinGhost19/go-micro-payment/services/inventory/service"
 )
 
 type InventoryHandler struct {
-	inventoryService *service.InventoryService
 	inventorypb.UnimplementedInventoryServiceServer
+	svc *service.InventoryService
 }
 
-func NewInventoryHandler(inventoryService *service.InventoryService) *InventoryHandler {
-	return &InventoryHandler{inventoryService: inventoryService}
+func NewInventoryHandler(svc *service.InventoryService) *InventoryHandler {
+	return &InventoryHandler{svc: svc}
 }
 
-func (c *InventoryHandler) CheckStock(ctx context.Context, in *inventorypb.CheckStockRequest) (*inventorypb.CheckStockResponse, error) {
-	response, err, str := c.inventoryService.CheckStock(ctx, in)
-	if err != nil {
-		return nil, err
-	}
-	if str != "" {
-		fmt.Println("Status: " + str)
-	}
-	return response, nil
+func (h *InventoryHandler) CheckStock(ctx context.Context, req *inventorypb.CheckStockRequest) (*inventorypb.CheckStockResponse, error) {
+	return h.svc.CheckStock(ctx, req)
 }
 
-func (*InventoryHandler) ReserveStock(context.Context, *inventorypb.ReserveStockRequest) (*inventorypb.ReserveStockResponse, error) {
+func (h *InventoryHandler) ReserveStock(ctx context.Context, req *inventorypb.ReserveStockRequest) (*inventorypb.ReserveStockResponse, error) {
+	return h.svc.ReserveStock(ctx, req)
 }
 
-func (*InventoryHandler) UpdateStock(context.Context, *inventorypb.UpdateStockRequest) (*inventorypb.UpdateStockResponse, error) {
+func (h *InventoryHandler) UpdateStock(ctx context.Context, req *inventorypb.UpdateStockRequest) (*inventorypb.UpdateStockResponse, error) {
+	return h.svc.UpdateStock(ctx, req)
 }

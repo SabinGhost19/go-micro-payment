@@ -9,6 +9,7 @@ import (
 	"github.com/SabinGhost19/go-micro-payment/internal/kafka"
 	"github.com/SabinGhost19/go-micro-payment/services/notification/model"
 	"github.com/SabinGhost19/go-micro-payment/services/notification/repository"
+	orderModel "github.com/SabinGhost19/go-micro-payment/services/order/model"
 	"log"
 	"time"
 )
@@ -30,7 +31,7 @@ func New(repo repository.NotificationRepository, emailSender EmailSender, kafka 
 	return &NotificationService{repo: repo, emailSender: emailSender, kafka: kafka}
 }
 
-// sendEmail sends an email and persists the notification
+// SendEmail sends an email and persists the notification
 func (s *NotificationService) SendEmail(ctx context.Context, userID, to, subject, message, reference string) (*model.Notification, error) {
 	status := "sent"
 	err := s.emailSender.Send(to, subject, message)
@@ -68,7 +69,7 @@ func (s *NotificationService) SendEmail(ctx context.Context, userID, to, subject
 	return n, err
 }
 
-// consumeEvents listens for order and payment events to trigger notifications
+// ConsumeEvents listens for order and payment events to trigger notifications
 func (s *NotificationService) ConsumeEvents(ctx context.Context) error {
 	consumer, err := kafka.NewConsumer([]string{"kafka:9092"}, "notification-service-group")
 	if err != nil {
@@ -101,10 +102,11 @@ func (h *eventHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim s
 		switch msg.Topic {
 		case "order-events":
 			var event struct {
-				OrderID  string   `json:"order_id"`
-				UserID   string   `json:"user_id"`
-				Amount   float64  `json:"amount"`
-				Products []string `json:"products"`
+				OrderID string                 `json:"order_id"`
+				UserID  string                 `json:"user_id"`
+				Amount  float64                `json:"amount"`
+				Items   []orderModel.OrderItem `json:"items"`
+				Address string                 `json:"address"`
 			}
 			if err := json.Unmarshal(msg.Value, &event); err != nil {
 				log.Printf("failed to unmarshal order event: %v", err)
@@ -112,7 +114,7 @@ func (h *eventHandler) ConsumeClaim(session sarama.ConsumerGroupSession, claim s
 			}
 			// send order confirmation email
 			subject := "Order Confirmation"
-			body := fmt.Sprintf("Your order %s for $%.2f has been placed.", event.OrderID, event.Amount)
+			body := fmt.Sprintf("Your order %s for $%.2f has been placed. Shipping to: %s", event.OrderID, event.Amount, event.Address)
 			_, err := h.service.SendEmail(context.Background(), event.UserID, "user@example.com", subject, body, event.OrderID)
 			if err != nil {
 				log.Printf("failed to send order confirmation: %v", err)

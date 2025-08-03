@@ -4,49 +4,52 @@ package order;
 
 option go_package = "github.com/SabinGhost19/go-micro-payment/proto/orderpb";
 
-// Order service for placing and querying orders
+// OrderService manages order operations
 service OrderService {
   rpc CreateOrder (CreateOrderRequest) returns (OrderResponse) {}
   rpc GetOrder (GetOrderRequest) returns (OrderResponse) {}
   rpc ListOrders (ListOrdersRequest) returns (ListOrdersResponse) {}
 }
 
-// Create order request
+// Message for creating a new order
 message CreateOrderRequest {
   string user_id = 1;
   repeated OrderItem items = 2;
   string address = 3;
+  string currency = 4;
 }
 
-// Get order details
+// Retrieve an order by ID
 message GetOrderRequest {
   string order_id = 1;
 }
 
-// List orders for a user
+// Listing orders with pagination
 message ListOrdersRequest {
   string user_id = 1;
   int32 page = 2;
   int32 page_size = 3;
 }
 
-// A single item in order
+// Order item details
 message OrderItem {
   string product_id = 1;
   int32 quantity = 2;
 }
 
-// Order response details
+// Order response
 message OrderResponse {
   string order_id = 1;
   string user_id = 2;
   repeated OrderItem items = 3;
-  string status = 4; // e.g., PLACED, PAID, SHIPPED, CANCELED
-  double total_amount = 5;
-  string created_at = 6;
+  string address = 4;
+  double amount = 5;
+  string status = 6;
+  string created_at = 7;
+  string updated_at = 8;
 }
 
-// List response
+// List orders response
 message ListOrdersResponse {
   repeated OrderResponse orders = 1;
 }
