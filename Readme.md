@@ -85,4 +85,7 @@ To ensure decoupling, resilience, and scalability, **Kafka** is used for asynchr
     ```bash
     go build -o user-service ./services/user && ./user-service
     ```
-    Repeat this command for all services (product, inventory, order, payment, notification, and api-gateway).
+    Repeat this command for all services (product, inventory, order, payment, notification, and api-gateway)
+
+
+
