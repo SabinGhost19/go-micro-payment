@@ -7,18 +7,15 @@ import (
 	"time"
 )
 
-// PaymentHandler implements the gRPC PaymentService server
 type PaymentHandler struct {
 	paymentpb.UnimplementedPaymentServiceServer
 	svc *service.PaymentService
 }
 
-// NewPaymentHandler creates a new PaymentHandler
 func NewPaymentHandler(svc *service.PaymentService) *PaymentHandler {
 	return &PaymentHandler{svc: svc}
 }
 
-// InitiatePayment handles the gRPC InitiatePayment request
 func (h *PaymentHandler) InitiatePayment(ctx context.Context, req *paymentpb.InitiatePaymentRequest) (*paymentpb.PaymentResponse, error) {
 	p, err := h.svc.InitiatePayment(ctx, req.OrderId, req.UserId, req.Amount, req.Currency)
 	if err != nil {
@@ -43,7 +40,6 @@ func (h *PaymentHandler) InitiatePayment(ctx context.Context, req *paymentpb.Ini
 	}, nil
 }
 
-// CheckPaymentStatus handles the gRPC CheckPaymentStatus request
 func (h *PaymentHandler) CheckPaymentStatus(ctx context.Context, req *paymentpb.CheckPaymentStatusRequest) (*paymentpb.PaymentResponse, error) {
 	p, err := h.svc.Repo.FindByID(req.PaymentId)
 	if err != nil {

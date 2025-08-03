@@ -6,18 +6,15 @@ import (
 	"github.com/SabinGhost19/go-micro-payment/services/notification/service"
 )
 
-// NotificationHandler implements the gRPC NotificationService server
 type NotificationHandler struct {
 	notificationpb.UnimplementedNotificationServiceServer
 	svc *service.NotificationService
 }
 
-// NewNotificationHandler creates a new NotificationHandler
 func NewNotificationHandler(svc *service.NotificationService) *NotificationHandler {
 	return &NotificationHandler{svc: svc}
 }
 
-// SendEmail handles the gRPC SendEmail request
 func (h *NotificationHandler) SendEmail(ctx context.Context, req *notificationpb.SendEmailRequest) (*notificationpb.NotifyResponse, error) {
 	n, err := h.svc.SendEmail(ctx, req.UserId, req.To, req.Subject, req.Body, "")
 	if err != nil {

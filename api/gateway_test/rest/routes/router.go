@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/SabinGhost19/go-micro-payment/api/gateway/rest/handler"
+	"github.com/SabinGhost19/go-micro-payment/api/gateway_test/rest/handler"
 	"github.com/gin-gonic/gin"
 )
 

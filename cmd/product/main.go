@@ -39,7 +39,7 @@ func main() {
 	// load environment variables
 	dbDSN := os.Getenv("DB_DSN")                                // e.g., "host=postgres user=admin password=secret dbname=products port=5432 sslmode=disable"
 	kafkaBrokers := []string{os.Getenv("KAFKA_BROKERS")}        // e.g., ["kafka:9092"]
-	grpcPort := os.Getenv("GRPC_PORT")                          // e.g., ":50055"
+	grpcPort := os.Getenv("PRODUCT_SERVICE_GRPC_PORT")          // e.g., ":50055"
 	inventoryServiceAddr := os.Getenv("INVENTORY_SERVICE_ADDR") // e.g., "inventory-service:50054"
 
 	// initialize database

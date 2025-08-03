@@ -27,9 +27,9 @@ func (s *mockEmailSender) Send(to, subject, body string) error {
 // main initializes and runs the Notification Service
 func main() {
 	// load environment variables
-	dbDSN := os.Getenv("DB_DSN")                         // e.g., "host=postgres user=admin password=secret dbname=notifications port=5432 sslmode=disable"
-	kafkaBrokers := []string{os.Getenv("KAFKA_BROKERS")} // e.g., ["kafka:9092"]
-	grpcPort := os.Getenv("GRPC_PORT")                   // e.g., ":50053"
+	dbDSN := os.Getenv("DB_DSN")                            // e.g., "host=postgres user=admin password=secret dbname=notifications port=5432 sslmode=disable"
+	kafkaBrokers := []string{os.Getenv("KAFKA_BROKERS")}    // e.g., ["kafka:9092"]
+	grpcPort := os.Getenv("NOTIFICATION_SERVICE_GRPC_PORT") // e.g., ":50053"
 
 	// initialize database
 	db, err := gorm.Open(postgres.Open(dbDSN), &gorm.Config{})

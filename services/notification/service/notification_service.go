@@ -14,12 +14,10 @@ import (
 	"time"
 )
 
-// EmailSender defines the interface for sending emails
 type EmailSender interface {
 	Send(to, subject, body string) error
 }
 
-// NotificationService handles notification-related business logic
 type NotificationService struct {
 	repo        repository.NotificationRepository
 	emailSender EmailSender

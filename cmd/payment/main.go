@@ -21,7 +21,7 @@ func main() {
 	// load environment variables
 	dbDSN := os.Getenv("DB_DSN")                         // e.g., "host=postgres user=admin password=secret dbname=payments port=5432 sslmode=disable"
 	kafkaBrokers := []string{os.Getenv("KAFKA_BROKERS")} // e.g., ["kafka:9092"]
-	grpcPort := os.Getenv("GRPC_PORT")                   // e.g., ":50052"
+	grpcPort := os.Getenv("PAYMENT_SERVICE_GRPC_PORT")   // e.g., ":50052"
 	stripeKey := os.Getenv("STRIPE_API_KEY")             // Stripe API key
 
 	// set Stripe API key

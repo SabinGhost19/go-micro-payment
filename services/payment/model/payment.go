@@ -2,7 +2,6 @@ package model
 
 import "time"
 
-// PaymentStatus defines the possible statuses of a payment
 type PaymentStatus string
 
 const (
@@ -11,7 +10,6 @@ const (
 	PaymentFailed  PaymentStatus = "FAILED"
 )
 
-// Payment represents a payment entity
 type Payment struct {
 	ID              string        `gorm:"primaryKey"`
 	OrderID         string        `gorm:"index"`

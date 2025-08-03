@@ -2,7 +2,6 @@ package model
 
 import "time"
 
-// Notification represents a notification entity
 type Notification struct {
 	ID        string    `gorm:"primaryKey"`
 	UserID    string    `gorm:"index"`

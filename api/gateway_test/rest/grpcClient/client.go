@@ -40,31 +40,31 @@ func InitGRPCClients(addrs map[string]string) error {
 		setter(conn)
 	}
 
-	wg.Add(6)
+	wg.Add(1)
 	go func() {
 		defer wg.Done()
 		connect(addrs["user"], func(conn *grpc.ClientConn) { UserClient = userpb.NewUserServiceClient(conn) })
 	}()
-	go func() {
-		defer wg.Done()
-		connect(addrs["product"], func(conn *grpc.ClientConn) { ProductClient = productpb.NewProductServiceClient(conn) })
-	}()
-	go func() {
-		defer wg.Done()
-		connect(addrs["order"], func(conn *grpc.ClientConn) { OrderClient = orderpb.NewOrderServiceClient(conn) })
-	}()
-	go func() {
-		defer wg.Done()
-		connect(addrs["payment"], func(conn *grpc.ClientConn) { PaymentClient = paymentpb.NewPaymentServiceClient(conn) })
-	}()
-	go func() {
-		defer wg.Done()
-		connect(addrs["inventory"], func(conn *grpc.ClientConn) { InventoryClient = inventorypb.NewInventoryServiceClient(conn) })
-	}()
-	go func() {
-		defer wg.Done()
-		connect(addrs["notification"], func(conn *grpc.ClientConn) { NotificationClient = notificationpb.NewNotificationServiceClient(conn) })
-	}()
+	//go func() {
+	//	defer wg.Done()
+	//	connect(addrs["product"], func(conn *grpc.ClientConn) { ProductClient = productpb.NewProductServiceClient(conn) })
+	//}()
+	//go func() {
+	//	defer wg.Done()
+	//	connect(addrs["order"], func(conn *grpc.ClientConn) { OrderClient = orderpb.NewOrderServiceClient(conn) })
+	//}()
+	//go func() {
+	//	defer wg.Done()
+	//	connect(addrs["payment"], func(conn *grpc.ClientConn) { PaymentClient = paymentpb.NewPaymentServiceClient(conn) })
+	//}()
+	//go func() {
+	//	defer wg.Done()
+	//	connect(addrs["inventory"], func(conn *grpc.ClientConn) { InventoryClient = inventorypb.NewInventoryServiceClient(conn) })
+	//}()
+	//go func() {
+	//	defer wg.Done()
+	//	connect(addrs["notification"], func(conn *grpc.ClientConn) { NotificationClient = notificationpb.NewNotificationServiceClient(conn) })
+	//}()
 
 	wg.Wait()
 	close(errCh)
